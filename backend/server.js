@@ -3,6 +3,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
+const activityRoutes = require('./routes/activityRoutes');
+
+app.use(express.json());
+app.use('/api/activities', activityRoutes);
+
 
 // Middleware to parse JSON and handle CORS issues
 app.use(cors());
