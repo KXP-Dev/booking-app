@@ -1,7 +1,18 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true
+  },
   username: {
     type: String,
     required: true,
@@ -15,7 +26,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    match: [/.+\@.+\..+/, 'Please fill a valid email address']
+    validate: [validator.isEmail, 'Please fill a valid email address']
   },
   password: {
     type: String,
@@ -25,14 +36,21 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   }
-  // Include other relevant user details
-});
+}, { timestamps: true });
 
 // Pre-save hook to hash the password
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  
-  this.password = await bcrypt.hash(this.password, 8);
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
+  next();
+});
+
+// Pre-update hook to hash the password
+userSchema.pre('findOneAndUpdate', async function (next) {
+  if (this._update.password) {
+    this._update.password = await bcrypt.hash(this._update.password, 8);
+  }
   next();
 });
 
