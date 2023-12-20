@@ -1,4 +1,6 @@
 const Activity = require('../models/activities');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.getAllActivities = async (req, res) => {
   try {

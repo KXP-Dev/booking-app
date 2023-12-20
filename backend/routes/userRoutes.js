@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const authMiddleware = require('../middleware/authMiddleware');
+const adminauthMiddleware = require('../middleware/adminauthMiddleware');
 
 // Register a new user
 router.post('/register', userController.createUser);
@@ -8,16 +10,22 @@ router.post('/register', userController.createUser);
 // Login user
 router.post('/login', userController.loginUser);
 
+// Create an admin user - Use with caution
+router.post('/create-admin', userController.createAdmin);
+
 // Get all users (Admin only)
-router.get('/', userController.getAllUsers);
+router.get('/', adminauthMiddleware, userController.getAllUsers);
 
-// Get user by ID
-router.get('/:id', userController.getUserById);
+// Search user by name (Admin Only)
+router.get('/search', adminauthMiddleware, userController.searchUserByName);
 
-// Update user by ID
-router.put('/:id', userController.updateUser);
+// Update user profile
+router.put('/profile', authMiddleware, userController.updateUserProfile);
 
-// Delete user by ID
-router.delete('/:id', userController.deleteUser);
+// Update user information (Admin Only)
+router.put('/:id', adminauthMiddleware, userController.updateUser);
+
+// Delete user by ID (Admin Only)
+router.delete('/:id', adminauthMiddleware, userController.deleteUser);
 
 module.exports = router;
