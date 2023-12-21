@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const adminAuthMiddleware = async (req, res, next) => {
+const adminauthMiddleware = async (req, res, next) => {
   try {
     const token = req.header('Authorization').replace('Bearer ', '');
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -17,4 +17,4 @@ const adminAuthMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = adminAuthMiddleware;
+module.exports = adminauthMiddleware;

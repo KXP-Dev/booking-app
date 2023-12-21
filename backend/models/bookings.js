@@ -1,28 +1,32 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
 
 const bookingSchema = new mongoose.Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  activity: {
-    type: Schema.Types.ObjectId,
-    ref: 'Activity',
-    required: true
-  },
-  date: {
-    type: Date,
-    required: true
-  },
-  timeSlot: {
-    type: String,
-    required: true
-  }
-  // Additional fields like status, payment information, etc. can be added
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    activity: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Activity',
+        required: true
+    },
+    timeSlot: {
+        type: Date,
+        required: true
+    },
+    expiresAt: {
+        type: Date,
+        required: true
+    },
+    token: {
+        type: String,
+        required: true
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 });
 
-const Booking = mongoose.model('Booking', bookingSchema);
-
-module.exports = Booking;
+module.exports = mongoose.model('Booking', bookingSchema);

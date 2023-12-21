@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const activityRoutes = require('./routes/activityRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 const app = express();
 
@@ -27,6 +28,10 @@ app.get('/api', (req, res) => {
 
 // User routes
 app.use('/api/users', userRoutes);
+
+app.use('/api/activities', activityRoutes);
+
+app.use('/api/bookings', bookingRoutes);
 
 // Serve static files from the public directory (if needed)
 app.use(express.static('public'));
