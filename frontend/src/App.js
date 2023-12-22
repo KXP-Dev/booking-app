@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AuthPage from './pages/AuthPage';
-import UserHomePage from './pages/UserHomePage';
+import UserHomePage from './pages/UserHomePage'; // Make sure to import UserHomePage
+import AuthPage from './pages/AuthPage'; // Assuming you have an AuthPage for login/register
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/dashboard" element={<UserHomePage />} />
-        {/* ... other routes */}
+        {/* ... any other routes */}
       </Routes>
     </Router>
   );

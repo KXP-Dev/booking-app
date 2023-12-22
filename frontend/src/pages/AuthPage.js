@@ -20,10 +20,10 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       const endpoint = tabIndex === 0 ? '/login' : '/register'; // Determine endpoint based on tabIndex
-      const response = await axios.post(`http://localhost:3000/api/users${endpoint}`, credentials);
+      const response = await axios.post(`http://localhost:5000/api/users${endpoint}`, credentials);
 
       // Assuming the response contains user data and a token
-      setAuth({ isLoggedIn: true, isAdmin: response.data.isAdmin });
+      setAuth({ isLoggedIn: true, isAdmin: response.data.isAdmin, user: response.data.user });
       localStorage.setItem('token', response.data.token); // Store token for subsequent requests
 
     } catch (error) {
