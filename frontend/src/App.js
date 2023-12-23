@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserHomePage from './pages/UserHomePage'; // Make sure to import UserHomePage
-import AuthPage from './pages/AuthPage'; // Assuming you have an AuthPage for login/register
+import UserHomePage from './pages/UserHomePage'; 
+import AuthPage from './pages/AuthPage'; // Page for login/register
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<AuthPage />} />
-        <Route path="/dashboard" element={<UserHomePage />} />
+        <Route path="/" element={<AuthPage />} /> {/* Home page */}
+        <Route path="/login" element={<AuthPage />} /> {/* Login page */}
+        <Route path="/dashboard" element={<UserHomePage />} /> {/* User dashboard */}
+        <Route path="/admin" element={<AdminPage />} /> {/* Admin dashboard */}
         {/* ... any other routes */}
       </Routes>
     </Router>

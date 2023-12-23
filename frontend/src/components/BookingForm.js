@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Select, MenuItem } from '@mui/material';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 
 const BookingForm = ({ activities }) => {
   const [bookingData, setBookingData] = useState({
@@ -15,7 +15,7 @@ const BookingForm = ({ activities }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/api/bookings', bookingData, {
+      await axios.post('http://localhost:5000/api/bookings', bookingData, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       alert('Booking successful!');
@@ -27,27 +27,34 @@ const BookingForm = ({ activities }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Select
-        value={bookingData.activityId}
-        onChange={handleChange}
-        name="activityId"
-        displayEmpty
-        fullWidth
-      >
-        <MenuItem value="" disabled>Select an Activity</MenuItem>
-        {activities.map(activity => (
-          <MenuItem key={activity.id} value={activity.id}>{activity.name}</MenuItem>
-        ))}
-      </Select>
-      <TextField
-        label="Time Slot"
-        type="datetime-local"
-        name="timeSlot"
-        value={bookingData.timeSlot}
-        onChange={handleChange}
-        fullWidth
-      />
-      <Button type="submit" variant="contained">Book Activity</Button>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <FormControl fullWidth>
+          <InputLabel id="activity-label">Activity</InputLabel>
+          <Select
+            labelId="activity-label"
+            value={bookingData.activityId}
+            onChange={handleChange}
+            name="activityId"
+            label="Activity"
+          >
+            {activities.map(activity => (
+              <MenuItem key={activity._id} value={activity._id}>{activity.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        
+        <TextField
+          label="Time Slot"
+          type="datetime-local"
+          name="timeSlot"
+          value={bookingData.timeSlot}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+        />
+        
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>Book Activity</Button>
+      </Box>
     </form>
   );
 };

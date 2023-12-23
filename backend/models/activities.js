@@ -18,7 +18,6 @@ const activitySchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-    // Add other relevant fields as needed
 });
 
 const Activity = mongoose.model('Activity', activitySchema);

@@ -1,9 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const NavBar = () => {
-  const { auth } = useAuth();
+  const { auth, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <nav>
@@ -17,7 +23,7 @@ const NavBar = () => {
         <>
           <Link to="/dashboard">Dashboard</Link>
           {auth.isAdmin && <Link to="/admin">Admin</Link>}
-          {/* Add a logout button/link here */}
+          <button onClick={handleLogout}>Logout</button>
         </>
       )}
     </nav>

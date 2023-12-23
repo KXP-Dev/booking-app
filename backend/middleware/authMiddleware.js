@@ -1,18 +1,19 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/User'); // Ensure correct path
 
 const authMiddleware = async (req, res, next) => {
   try {
-    // Extract the token from the Authorization header
-    const token = req.header('Authorization').replace('Bearer ', '');
-    
-    // Verify the token using the JWT secret from your environment variables
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const authHeader = req.header('Authorization');
+    if (!authHeader) {
+      return res.status(401).json({ message: 'No authentication token provided' });
+    }
 
-    // Attach the user's details to the request object
+    const token = authHeader.replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
     const user = await User.findById(decoded.id);
     if (!user) {
-      throw new Error();
+      return res.status(401).json({ message: 'Not authorized to access this resource' });
     }
     
     req.user = user;
@@ -20,6 +21,7 @@ const authMiddleware = async (req, res, next) => {
     
     next();
   } catch (error) {
+    console.error('Authentication error:', error.message);
     res.status(401).json({ message: 'Not authorized to access this resource' });
   }
 };

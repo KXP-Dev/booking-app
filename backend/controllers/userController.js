@@ -55,7 +55,7 @@ exports.createAdmin = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).select('+password');
 
     if (!user || !await bcrypt.compare(password, user.password)) {
       return res.status(401).json({ message: 'Invalid credentials' });
@@ -65,7 +65,19 @@ exports.loginUser = async (req, res) => {
       expiresIn: '1h'
     });
 
-    res.json({ message: 'Logged in successfully', token });
+    // Include isAdmin and other user details in the response
+    res.json({
+      message: 'Logged in successfully',
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        isAdmin: user.isAdmin
+      }
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
