@@ -81,3 +81,25 @@ The primary audience for Easy Entertainment Bookings App includes individuals or
 
 ### Booking Page
 ![Booking Page Screenshot](img/bookingactivities.jpg)
+
+### Admin Activities
+![Admin Activities Screenshot](img/admin-activities.jpg)
+
+### Admin Bookings
+![Admin Bookings Screenshot](img/admin-bookings.jpg)
+
+### Admin Users
+![Admin Users Screenshot](img/admin-users.jpg)
+
+### Login Page
+![Login Page Screenshot](img/login.jpg)
+
+### Register Page
+![Register Page Screenshot](img/register.jpg)
+
+### User Dashboard
+![User Dashboard Screenshot](img/user-dashboard.jpg)
+
+### Postman Testing
+![Postman Screenshot](img/register.jpg)
+
