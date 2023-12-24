@@ -7,7 +7,7 @@ exports.createUser = async (req, res) => {
   try {
     const { username, firstName, lastName, email, password } = req.body;
     
-    // Optional: Add additional logic to check if the user already exists.
+
 
     const newUser = new User({
       username,

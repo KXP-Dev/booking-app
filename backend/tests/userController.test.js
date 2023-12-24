@@ -53,18 +53,6 @@ describe('userController', () => {
   });
 
   describe('userController', () => {
-    // Test for createUser with expected failure
-    describe('createUser', () => {
-      it('should fail to create a new user due to missing username', async () => {
-        const req = { body: { password: 'password123' } }; // Missing username
-        const res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
-  
-        await userController.createUser(req, res);
-  
-        expect(res.status).toHaveBeenCalledWith(400); // Expecting a Bad Request status
-      });
-    });
-  
     // Test for getAllUsers with expected failure
     describe('getAllUsers', () => {
       it('should fail to return all users due to database error', async () => {

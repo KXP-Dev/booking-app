@@ -92,7 +92,7 @@ exports.adminDeleteBooking = async (req, res) => {
             return res.status(404).json({ message: 'Booking not found' });
         }
 
-        // You can add additional admin authorization checks here if needed
+
 
         await Booking.findByIdAndDelete(bookingId);
         res.json({ message: 'Booking cancelled by admin successfully' });
