@@ -28,4 +28,6 @@ router.put('/:id', adminauthMiddleware, userController.updateUser);
 // Delete user by ID (Admin Only)
 router.delete('/:id', adminauthMiddleware, userController.deleteUser);
 
+router.post('/updatePassword', authMiddleware, userController.updateUserPassword);
+
 module.exports = router;
