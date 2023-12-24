@@ -21,11 +21,8 @@ const adminauthMiddleware = async (req, res, next) => {
     }
 
     req.user = user;
-    req.token = token;
-    
     next();
   } catch (error) {
-    console.error('Admin Authentication error:', error.message);
     res.status(401).json({ message: 'Please authenticate' });
   }
 };

@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bookingController = require('../controllers/bookingController');
 const authMiddleware = require('../middleware/authMiddleware');
+const adminauthMiddleware = require('../middleware/adminauthMiddleware');
 
 router.post('/', authMiddleware, bookingController.createBooking);
-router.get('/user', authMiddleware, bookingController.getUserBookings); // Route to get user bookings
-router.get('/', authMiddleware, bookingController.getAllBookings); // Route to get all bookings (for admin)
+router.get('/user', authMiddleware, bookingController.getUserBookings);
+router.get('/all', authMiddleware, adminauthMiddleware, bookingController.getAllBookingsWithUsernames);
 router.delete('/:id', authMiddleware, bookingController.deleteBooking);
 router.put('/:id', authMiddleware, bookingController.updateBooking);
+router.delete('/admin/:id', authMiddleware, adminAuthMiddleware, bookingController.adminDeleteBooking);
 
 module.exports = router;

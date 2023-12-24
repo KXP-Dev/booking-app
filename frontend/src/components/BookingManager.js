@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { List, ListItem, Button } from '@mui/material';
-import { useAuth } from '../context/AuthContext';
 
 const BookingManager = () => {
   const [bookings, setBookings] = useState([]);
-  const { auth } = useAuth();
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem('token');
-        const endpoint = auth.user.isAdmin ? '/api/bookings' : '/api/bookings/user';
-        const response = await axios.get(endpoint, {
+        const response = await axios.get('http://localhost:5000/api/bookings/all', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setBookings(response.data);
@@ -22,15 +19,15 @@ const BookingManager = () => {
     };
 
     fetchBookings();
-  }, [auth.user.isAdmin]);
+  }, []);
 
   const handleDeleteBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`/api/bookings/${bookingId}`, {
+      await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setBookings(bookings.filter(booking => booking._id !== bookingId));
+      setBookings(prevBookings => prevBookings.filter(booking => booking._id !== bookingId));
     } catch (error) {
       console.error('Failed to delete booking', error);
     }
@@ -41,22 +38,17 @@ const BookingManager = () => {
       {bookings.map(booking => (
         <ListItem key={booking._id}>
           <div>
-            <strong>User:</strong> {booking.user.username}
+            <strong>User:</strong> {booking.user ? booking.user.username : 'Unknown User'}
           </div>
           <div>
-            <strong>Activity:</strong> {booking.activity.name}
+            <strong>Activity:</strong> {booking.activity ? booking.activity.name : 'Unknown Activity'}
           </div>
           <div>
-            <strong>Time Slot:</strong> {booking.timeSlot}
+            <strong>Time Slot:</strong> {new Date(booking.timeSlot).toLocaleString()}
           </div>
-          {auth.user.isAdmin && (
-            <Button
-              color="secondary"
-              onClick={() => handleDeleteBooking(booking._id)}
-            >
-              Delete
-            </Button>
-          )}
+          <Button color="secondary" onClick={() => handleDeleteBooking(booking._id)}>
+            Delete
+          </Button>
         </ListItem>
       ))}
     </List>

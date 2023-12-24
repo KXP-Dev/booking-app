@@ -71,11 +71,32 @@ exports.updateBooking = async (req, res) => {
     }
 };
 
-exports.getAllBookings = async (req, res) => {
+exports.getAllBookingsWithUsernames = async (req, res) => {
     try {
-        const bookings = await Booking.find({}).populate('user').populate('activity');
+        if (!req.user.isAdmin) {
+            return res.status(403).json({ message: 'Access denied. Admin only' });
+        }
+        const bookings = await Booking.find().populate('user', 'username').populate('activity');
         res.json(bookings);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+};
+
+exports.adminDeleteBooking = async (req, res) => {
+    try {
+        const bookingId = req.params.id;
+        const booking = await Booking.findById(bookingId);
+
+        if (!booking) {
+            return res.status(404).json({ message: 'Booking not found' });
+        }
+
+        // You can add additional admin authorization checks here if needed
+
+        await Booking.findByIdAndDelete(bookingId);
+        res.json({ message: 'Booking cancelled by admin successfully' });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };
