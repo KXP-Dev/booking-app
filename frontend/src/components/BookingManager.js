@@ -24,7 +24,7 @@ const BookingManager = () => {
   const handleDeleteBooking = async (bookingId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`, {
+      await axios.delete(`http://localhost:5000/api/bookings/admin/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBookings(prevBookings => prevBookings.filter(booking => booking._id !== bookingId));
