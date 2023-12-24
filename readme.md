@@ -1,5 +1,7 @@
 # Easy Entertainment Bookings App by Kim Perez
 
+[GitHub Repo](https://github.com/KXP-Dev/booking-app)
+
 ## Description
 
 Easy Entertainment Bookings is a web application designed to streamline the booking process for various entertainment venues. With an easy-to-use interface and a robust backend system.
